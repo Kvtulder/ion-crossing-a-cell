@@ -7,6 +7,10 @@ M = 27e-12  # weight of a cell, https://physics.aps.org/synopsis-for/10.1103/Phy
 
 # forces:
 
+def F(x):
+    return x / 2 - (x**3) / 2
+
+
 def frictionalForce(x, t):
     # TODO implement calculation of force
     return 1;

@@ -1,9 +1,10 @@
 # this file is used for all the integration techniques
+import physics
 
 
+def verletX(x_prev, v_prev, dt):
 
-def verletX():
-    # TODO implement the verlet algorithm
-    return 1
+    return x_prev + v_prev * dt + (physics.F(x) / physics.M) * dt ** 2
 
-def verletY
+def verletV(v_prev):
+    return v_prev + (physics.F())

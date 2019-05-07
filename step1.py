@@ -54,11 +54,17 @@ def simulate(plot = True):
     L_x = []
     L_t = []
 
+    Ekintot = 0
+
     for t in np.arange(0, tend, dt):
         Fo = F(x,t,v)
         x = x + v * dt + Fo / (2 * m) * dt**2
         Fn = F(x,t,v)
         v = v + (Fo + Fn)/(2*m) * dt
+
+        Ekin = .5 * m * v**2
+
+        Ekintot = Ekintot + Ekin
         L_x.append(x)
         L_v.append(v)
         L_t.append(t)
@@ -94,6 +100,8 @@ def simulate(plot = True):
         plt.xlabel('plaats')
         plt.ylabel('snelheid')
         plt.show()
+
+    print('Average kin energy',Ekintot/(tend/dt))
 
     return statistics.mean(periods)
 

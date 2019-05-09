@@ -5,7 +5,7 @@ import math
 
 xstart = 0
 vstart = 0
-tend = 500
+tend = 1500
 
 # uit t paper
 dt = 0.01
@@ -30,16 +30,16 @@ def F(x,t,v):
     # https://en.wikipedia.org/wiki/Langevin_dynamics; R(t) is deze delta
     # wat is de standaarddev hier?
     # mu, sigma
-    #delta = np.random.normal(0, .5)
-    #fr = 2 * D * gam**2 * delta # delta ding
+    delta = np.random.normal(0,1)
+    fr = 2 * D * gam**2 * delta # delta ding
 
     # dit is uit het paper
-    fr = f0 * math.cos(omega * t)
+    #fr = f0 * math.cos(omega * t)
 
     # kasper; dit is de wrijving die we waren vergeten (nog niet hadden)
     friction = - gam * v
 
-    F = x/2 - (x**3)/2 + fr + friction
+    F = x/2 - (x**3)/2 + fr  + friction
     return F
 
 def V(x):
@@ -65,26 +65,31 @@ def simulate(plot = True):
         Ekin = .5 * m * v**2
 
         Ekintot = Ekintot + Ekin
-        L_x.append(x)
-        L_v.append(v)
-        L_t.append(t)
 
-    open = True
+        if t > 1000:
+            L_x.append(x)
+            L_v.append(v)
+            L_t.append(t)
+            #print("hi")
+
+    open = False
     startopen = 0
     periods = []
 
+    #print(L_x)
+
     # calculates how long the channel stays open
     for i in range(0, len(L_x) - 1):
-        if L_x[i] > 0 and open:
+        if L_x[i] > 0 and not open:
             # channel just opened!
-            open = False
-            startopen = i
-        elif L_x[i] < 0 and not open:
-            # channel just closed
             open = True
+            startopen = i
+        elif L_x[i] < 0 and open:
+            # channel just closed
+            open = False
             # amount of frames between the two events times dt is out period
             periods.append((i - startopen) * dt)
-
+            #print(i)
     # only plot if wanted
     if plot:
         # normal plot

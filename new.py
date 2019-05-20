@@ -7,8 +7,10 @@ x_start, v_start = 0, 0
 gamma = 0.19
 amu = 1.660539 * 10**-27
 m = 39.0983 * amu
+m = 1
 T = 310
 kb = 1.38064852 * 10**-23
+kb = 3*10**3
 D = kb * T / (gamma * m)
 delta_t = 0.01
 
